@@ -26,7 +26,7 @@ def fetch_cidrs(country_code):
 # ==== STEP 2: ZMap Port Scan ====
 def run_zmap(cidr_file, port):
     out_file = f"{cidr_file}_{port}.txt"
-    cmd = [ZMAP_PATH, '-p', str(port), '-w', cidr_file, '-o', out_file, '-q']
+    cmd = ['sudo',ZMAP_PATH, '-p', str(port), '-w', cidr_file, '-o', out_file, '-q']
     print(f"[*] Scanning port {port} with zmap...")
     subprocess.run(cmd, check=True)
     return out_file
