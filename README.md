@@ -9,6 +9,7 @@
 - Lưu kết quả vào SQLite
 - Tích hợp thông tin GeoIP (cần file `GeoLite2-Country.mmdb` trong thư mục `data/`)
 - Giao diện dashboard trực quan
+- Thêm khả năng quản lý proxy (thêm/xoá trực tiếp qua web)
 - Lập lịch kiểm tra lại proxy định kỳ
 
 ## 🗂 Cấu trúc thư mục
@@ -45,6 +46,7 @@ python main.py
 ```
 
 Dashboard truy cập tại: [http://localhost:8000](http://localhost:8000)
+Bạn có thể thêm hoặc xoá proxy trực tiếp trên trang dashboard.
 
 ## ⚙️ Tuỳ chỉnh
 
