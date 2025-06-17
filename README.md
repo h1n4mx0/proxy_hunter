@@ -1,97 +1,59 @@
+# 🕵️ Proxy Hunter Dashboard
 
-# 🕵️‍♂️ Proxy Hunter
+**Proxy Hunter Dashboard** là hệ thống tự động quét IP theo quốc gia, kiểm tra proxy hoạt động và hiển thị trực quan qua giao diện web (FastAPI).
 
-**Proxy Hunter** là một công cụ tự động giúp bạn:
-1. Cào dải IP theo quốc gia từ ipdeny.com
-2. Quét các cổng proxy phổ biến bằng `zmap`
-3. Kiểm tra proxy nào hoạt động thực sự bằng HTTP request
+## 🚀 Tính năng
+- Tự động tải CIDR từ ipdeny.com
+- Scan cổng phổ biến qua zmap (8080, 3128, 443)
+- Kiểm tra proxy sống bằng HTTP(S)
+- Giao diện dashboard trực quan
+- Lập lịch kiểm tra lại proxy định kỳ
 
-> Ví dụ: tìm proxy HTTP từ các IP ở Anh (GB), đang mở port 443/8080/3128 và phản hồi tốt.
+## 🗂 Cấu trúc thư mục
 
----
-
-## ⚙️ Yêu cầu hệ thống
-
-- Python 3.7+
-- Hệ điều hành: **Linux / macOS** (Không hỗ trợ Windows native)
-- Công cụ:
-  - [`zmap`](https://github.com/zmap/zmap)
-  - `curl`, `jq`, `masscan` (tùy chọn)
-  - Python module: `requests`
-
----
-
-## 🚀 Cài đặt
-
-Chạy script tự động:
-
-```bash
-chmod +x install.sh
-./install.sh
+```
+proxy_hunter/
+├── app/                 # Logic proxy
+│   ├── checker.py
+│   ├── crawler.py
+│   ├── scheduler.py
+│   └── storage.py
+├── dashboard/           # FastAPI dashboard
+│   └── server.py
+├── data/                # CIDRs, proxy output
+├── config.py            # Cấu hình
+├── main.py              # Entry point
+└── requirements.txt     # Thư viện
 ```
 
-Script sẽ:
-- Cài `zmap`, `masscan`, `curl`, `jq`, `python3`, `pip`
-- Tạo virtualenv (`./venv`) và cài `requests` bên trong
+## ▶️ Hướng dẫn chạy
 
-Kích hoạt môi trường sau này:
+### 1. Cài đặt
 
 ```bash
-source venv/bin/activate
+pip install -r requirements.txt
+sudo apt install zmap
 ```
 
----
-
-## 🧠 Cách sử dụng
+### 2. Khởi chạy
 
 ```bash
-python3 proxy_hunter.py
+python main.py
 ```
 
-Sau đó nhập mã quốc gia theo ISO Alpha-2 (vd: `gb`, `vn`, `us`, `de`, ...)
+Dashboard truy cập tại: [http://localhost:8000](http://localhost:8000)
 
-Quá trình sẽ:
-1. Cào IP dải từ ipdeny.com
-2. Quét port 8080, 3128, 443 bằng zmap
-3. Gộp IP:PORT thành danh sách proxy
-4. Kiểm tra từng proxy xem có phản hồi thật sự qua HTTP không
+## ⚙️ Tuỳ chỉnh
 
----
+Thay đổi trong `config.py`:
 
-## 📁 Output
+```python
+PORTS = [8080, 3128, 443]
+THREADS = 50
+TEST_URL = 'https://httpbin.org/ip'
+```
 
-| File              | Mô tả                            |
-|-------------------|----------------------------------|
-| `proxy_candidates.txt` | IP:PORT từ zmap quét được       |
-| `live.txt`        | Proxy hoạt động thật sự         |
-| `die.txt`         | Proxy không phản hồi / lỗi kết nối |
-
----
-
-## 📚 Tham khảo
-
-- [https://www.ipdeny.com/ipblocks/](https://www.ipdeny.com/ipblocks/)
-- [https://github.com/zmap/zmap](https://github.com/zmap/zmap)
-- [httpbin.org/ip](https://httpbin.org/ip) – dùng làm endpoint test proxy
-
----
-
-## 🛡️ Lưu ý bảo mật
-
-- Chạy tool với quyền `sudo` nếu `zmap` yêu cầu raw socket
-- Đảm bảo sử dụng IP hợp pháp và tuân thủ luật pháp quốc tế về quét mạng
-
----
-
-## 📦 TODO / Phát triển tiếp
-
-- [ ] Hỗ trợ SOCKS4/5
-- [ ] Lọc proxy theo tốc độ / quốc gia thực tế (GeoIP)
-- [ ] Giao diện Web quản lý proxy pool
-- [ ] Crawler thêm từ public proxy lists
-
----
-
-## 🧑‍💻 Tác giả
-
-Proxy Hunter được phát triển bởi bạn để xây dựng proxy pool riêng, kết hợp `zmap`, `ipdeny`, `requests` và automation Python.
+## 📊 Mở rộng
+- [ ] Lưu Redis/SQLite
+- [ ] Tích hợp thông tin GeoIP
+- [ ] Export CSV, gửi alert Telegram
