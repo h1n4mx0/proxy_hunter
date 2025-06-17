@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from datetime import datetime
 from app.storage import get_all_proxies, add_proxy, delete_proxy
+
 import uvicorn
 
 app = FastAPI()
@@ -36,7 +37,6 @@ async def add_proxy_api(item: dict):
 def delete_proxy_api(ip: str, port: int):
     delete_proxy(ip, port)
     return {"status": "deleted"}
-
 
 @app.get("/", response_class=HTMLResponse)
 def dashboard():
