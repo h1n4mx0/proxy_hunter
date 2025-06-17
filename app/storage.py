@@ -98,3 +98,23 @@ def get_all_proxies():
         })
     return result
 
+
+def add_proxy(ip: str, port: int, country: str = 'N/A',
+              anonymity: str = 'unknown'):
+    """Manually insert a proxy into the database."""
+    now = datetime.utcnow().isoformat()
+    with _lock, _conn:
+        _conn.execute(
+            'INSERT OR IGNORE INTO proxies '
+            '(ip, port, latency_ms, last_checked, total_checks, '
+            'live_checks, country, anonymity) '
+            'VALUES (?, ?, -1, ?, 0, 0, ?, ?)',
+            (ip, port, now, country, anonymity)
+        )
+
+
+def delete_proxy(ip: str, port: int):
+    """Remove a proxy from the database."""
+    with _lock, _conn:
+        _conn.execute('DELETE FROM proxies WHERE ip=? AND port=?', (ip, port))
+
