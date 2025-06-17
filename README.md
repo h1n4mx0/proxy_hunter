@@ -6,6 +6,8 @@
 - Tự động tải CIDR từ ipdeny.com
 - Scan cổng phổ biến qua zmap (8080, 3128, 443)
 - Kiểm tra proxy sống bằng HTTP(S)
+- Lưu kết quả vào SQLite
+- Tích hợp thông tin GeoIP (cần file `GeoLite2-Country.mmdb` trong thư mục `data/`)
 - Giao diện dashboard trực quan
 - Lập lịch kiểm tra lại proxy định kỳ
 
@@ -16,11 +18,12 @@ proxy_hunter/
 ├── app/                 # Logic proxy
 │   ├── checker.py
 │   ├── crawler.py
+│   ├── geoip.py
 │   ├── scheduler.py
 │   └── storage.py
 ├── dashboard/           # FastAPI dashboard
 │   └── server.py
-├── data/                # CIDRs, proxy output
+├── data/                # CIDRs, proxy output, database
 ├── config.py            # Cấu hình
 ├── main.py              # Entry point
 └── requirements.txt     # Thư viện
@@ -54,6 +57,4 @@ TEST_URL = 'https://httpbin.org/ip'
 ```
 
 ## 📊 Mở rộng
-- [ ] Lưu Redis/SQLite
-- [ ] Tích hợp thông tin GeoIP
 - [ ] Export CSV, gửi alert Telegram

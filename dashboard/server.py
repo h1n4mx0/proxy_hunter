@@ -3,10 +3,11 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from datetime import datetime
 from app.storage import get_all_proxies
-import os, uvicorn
+import uvicorn
 
 app = FastAPI()
 # app.mount("/static", StaticFiles(directory="dashboard/static"), name="static")
+
 
 @app.get("/api/proxies", response_class=JSONResponse)
 def get_proxies():
@@ -19,6 +20,7 @@ def get_proxies():
             "last_check_human": humanize_time(p['last_checked'])
         })
     return result
+
 
 @app.get("/", response_class=HTMLResponse)
 def dashboard():
@@ -52,7 +54,8 @@ loadProxies();
 </html>
 """)
 
-def humanize_time(dt: datetime):
+
+def humanize_time(dt: datetime) -> str:
     delta = datetime.utcnow() - dt
     seconds = delta.total_seconds()
     if seconds < 60:
@@ -63,6 +66,7 @@ def humanize_time(dt: datetime):
         return f"{int(seconds // 3600)}h ago"
     return f"{int(seconds // 86400)}d ago"
 
+
 def run_dashboard():
-    # os.makedirs("dashboard/static", exist_ok=True)
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
