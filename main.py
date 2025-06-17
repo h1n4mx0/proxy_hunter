@@ -4,8 +4,8 @@ from app.scheduler import start_scheduler
 import threading
 
 if __name__ == '__main__':
-    scan_all_ports("vn")  # Có thể đổi country code
-    check_proxies("data/proxy_candidates.txt")
+    scan_all_ports('vn')  # Có thể đổi country code
+    check_proxies('data/proxy_candidates.txt')
 
     # Chạy dashboard song song
     from dashboard.server import run_dashboard
@@ -14,3 +14,4 @@ if __name__ == '__main__':
     # Chạy lặp lại proxy checker
     start_scheduler()
     input("\n[ENTER] để dừng chương trình...\n")
+
