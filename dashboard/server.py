@@ -6,7 +6,7 @@ from app.storage import get_all_proxies
 import os, uvicorn
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="dashboard/static"), name="static")
+# app.mount("/static", StaticFiles(directory="dashboard/static"), name="static")
 
 @app.get("/api/proxies", response_class=JSONResponse)
 def get_proxies():
@@ -64,5 +64,5 @@ def humanize_time(dt: datetime):
     return f"{int(seconds // 86400)}d ago"
 
 def run_dashboard():
-    os.makedirs("dashboard/static", exist_ok=True)
+    # os.makedirs("dashboard/static", exist_ok=True)
     uvicorn.run(app, host="0.0.0.0", port=8000)
