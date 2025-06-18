@@ -1,7 +1,7 @@
 import requests
 from concurrent.futures import ThreadPoolExecutor
 from config import THREADS, TEST_URL, TIMEOUT
-from app.storage import add_live_proxy
+from crawler.storage import add_live_proxy
 
 def check_proxy(proxy_line):
     proxy_line = proxy_line.strip()

@@ -1,5 +1,5 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-from app.checker import check_proxies
+from crawler.checker import check_proxies
 
 def start_scheduler():
     scheduler = BackgroundScheduler()

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from datetime import datetime
-from app.storage import get_all_proxies
+from crawler.storage import get_all_proxies
 import os, uvicorn
 
 app = FastAPI()

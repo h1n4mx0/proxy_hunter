@@ -8,7 +8,7 @@ if __name__ == '__main__':
     check_proxies("data/proxy_candidates.txt")
 
     # Chạy dashboard song song
-    from dashboard.server import run_dashboard
+    from server.server import run_dashboard
     threading.Thread(target=run_dashboard, daemon=True).start()
 
     # Chạy lặp lại proxy checker
